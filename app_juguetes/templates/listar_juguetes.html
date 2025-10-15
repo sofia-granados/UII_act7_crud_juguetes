@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Juguetes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .btn { margin: 5px; padding: 5px 10px; text-decoration: none; color: white; border-radius: 4px; }
+        .editar { background-color: #007BFF; }
+        .borrar { background-color: #DC3545; }
+        .agregar { background-color: #28A745; display: inline-block; margin: 10px 0; padding: 10px 15px; color: white; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Listado de Juguetes</h1>
+
+    <a href="{% url 'agregar_juguetes' %}" class="btn agregar">Agregar Juguete</a> 
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Categoría</th> 
+                <th>Garantía</th> 
+                <th>Reseña</th> 
+                <th>Precio</th> 
+                <th>Acciones</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for juguete in juguetes %}
+            <tr>
+                <td>{{ juguete.nombre }}</td>
+                <td>{{ juguete.categoria }}</td> 
+                <td>{{ juguete.garantia }}</td> 
+                <td>{{ juguete.reseña }}</td> 
+                <td>${{ juguete.precio }}</td> 
+                <td>
+                    {# Ahora, 'juguete' en esta línea se refiere al juguete actual en la iteración #}
+                    <a href="{% url 'editar_juguetes' juguete.id %}" class="btn editar">Editar</a>
+                    <a href="{% url 'borrar_juguetes' juguete.id %}" class="btn borrar">Borrar</a>
+                    {# Opcional: Si tienes una vista para ver detalles, aquí iría el botón #}
+                    {# <a href="{% url 'ver_juguetes' juguete.id %}" class="btn">Ver</a> #}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No hay juguetes registrados.</td>
+            </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+
+</body>
+</html>
